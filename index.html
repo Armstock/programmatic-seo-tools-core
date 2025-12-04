@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Keyword Mixer (Core Logic)</title>
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; padding: 2rem; max-width: 800px; margin: 0 auto; background: #f0f0f0; }
+        .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h1 { margin-top: 0; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        textarea { width: 100%; height: 150px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
+        button { background: #2563eb; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #1d4ed8; }
+        #result { width: 100%; height: 200px; margin-top: 1rem; background: #1e293b; color: #fff; }
+        .promo { margin-top: 2rem; padding: 1rem; background: #eff6ff; border-left: 4px solid #2563eb; color: #1e40af; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Simple Keyword Mixer (JS Logic)</h1>
+        <p>A lightweight Cartesian Product generator for SEO keywords.</p>
+        
+        <div class="grid">
+            <textarea id="colA" placeholder="Prefix (e.g. Best, Top)"></textarea>
+            <textarea id="colB" placeholder="Root (e.g. CRM, Tools)"></textarea>
+            <textarea id="colC" placeholder="Suffix (e.g. for Small Business)"></textarea>
+        </div>
+        
+        <button onclick="mixKeywords()">Generate Keywords</button>
+        <textarea id="result" placeholder="Results will appear here..." readonly></textarea>
+
+        <div class="promo">
+            <strong>Want a better experience?</strong><br>
+            Check out the full <strong><a href="https://pseo.click" target="_blank">pSEO Toolbox</a></strong> for Dark Mode, CSV Export, Local Storage Auto-save, and Schema Generators.
+        </div>
+    </div>
+
+    <script>
+        function mixKeywords() {
+            const getLines = (id) => document.getElementById(id).value.split('\n').map(s => s.trim()).filter(s => s);
+            const colA = getLines('colA');
+            const colB = getLines('colB');
+            const colC = getLines('colC');
+            
+            // Cartesian Product Logic
+            let results = [];
+            const listA = colA.length ? colA : [''];
+            const listB = colB.length ? colB : [''];
+            const listC = colC.length ? colC : [''];
+
+            listA.forEach(a => {
+                listB.forEach(b => {
+                    listC.forEach(c => {
+                        results.push(`${a} ${b} ${c}`.trim());
+                    });
+                });
+            });
+
+            document.getElementById('result').value = results.join('\n');
+        }
+    </script>
+</body>
+</html>
